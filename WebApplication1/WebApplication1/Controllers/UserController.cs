@@ -84,5 +84,27 @@ namespace WebApplication1.Controllers
             }
         }
 
+        [ActionName("getEWSUser")]
+        [HttpGet("getEWSUser")]
+        public async Task<ActionResult> getEWSUser()
+        {
+            try
+            {
+                List<string> mailFolders = await this.UserManager.getEWSUser();
+
+                if (mailFolders == null)
+                {
+                    return this.NotFound("User do not exist");
+                }
+
+
+                return this.Ok(mailFolders);
+            }
+            catch (Exception ex)
+            {
+                return this.BadRequest("Could not get the user");
+            }
+        }
+
     }
 }

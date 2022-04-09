@@ -1,4 +1,5 @@
-﻿using Microsoft.Graph;
+﻿using Microsoft.Exchange.WebServices.Data;
+using Microsoft.Graph;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,9 +12,11 @@ namespace WebApplication1.Models
     {
         Task<IGraphServiceUsersCollectionPage> getUser();
 
+        Task<List<string>> getEWSUser();
+
         Task<IGraphServiceUsersCollectionPage> getUserName(string email);
 
-        Task<IMessageAttachmentsCollectionPage> getMailAttachments();
+        Task<IMailFolderMessagesCollectionPage> getMailAttachments();
 
     }
 }

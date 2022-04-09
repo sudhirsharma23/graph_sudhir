@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "FGJHFLsAoZ6ksdBVjUP75jzQznGnLILs025E4MAoiqbQxJrwsXbnmRPEQZ0s+4UjXDH4DGYdDI048b/vgnolqg==",
+  "dgSpecHash": "qBOfDfReQbRzU1yu57caRS/6/jMT3JnxQfYvD8qqCXWDIqYcNw9z5rWS+pqhLNnEoiTqg7oo3woHPsDfwSZlyQ==",
   "success": true,
   "projectFilePath": "D:\\SudhirSharma\\LearningFolder\\.netCore\\swagger\\WebApplication1\\WebApplication1\\WebApplication1.csproj",
   "expectedPackageFiles": [
@@ -15,6 +15,7 @@
     "C:\\Users\\sudhi\\.nuget\\packages\\microsoft.aspnetcore.dataprotection.abstractions\\5.0.8\\microsoft.aspnetcore.dataprotection.abstractions.5.0.8.nupkg.sha512",
     "C:\\Users\\sudhi\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\1.1.1\\microsoft.bcl.asyncinterfaces.1.1.1.nupkg.sha512",
     "C:\\Users\\sudhi\\.nuget\\packages\\microsoft.csharp\\4.5.0\\microsoft.csharp.4.5.0.nupkg.sha512",
+    "C:\\Users\\sudhi\\.nuget\\packages\\microsoft.exchange.webservices.netstandard\\1.1.3\\microsoft.exchange.webservices.netstandard.1.1.3.nupkg.sha512",
     "C:\\Users\\sudhi\\.nuget\\packages\\microsoft.extensions.apidescription.server\\3.0.0\\microsoft.extensions.apidescription.server.3.0.0.nupkg.sha512",
     "C:\\Users\\sudhi\\.nuget\\packages\\microsoft.extensions.caching.abstractions\\5.0.0\\microsoft.extensions.caching.abstractions.5.0.0.nupkg.sha512",
     "C:\\Users\\sudhi\\.nuget\\packages\\microsoft.extensions.caching.memory\\5.0.0\\microsoft.extensions.caching.memory.5.0.0.nupkg.sha512",
