@@ -1,23 +1,24 @@
 {
   "format": 1,
   "restore": {
-    "D:\\SudhirSharma\\LearningFolder\\.netCore\\swagger\\WebApplication1\\WebApplication1\\WebApplication1.csproj": {}
+    "C:\\Sudhir\\Code\\graph_sudhir\\WebApplication1\\WebApplication1\\WebApplication1.csproj": {}
   },
   "projects": {
-    "D:\\SudhirSharma\\LearningFolder\\.netCore\\swagger\\WebApplication1\\WebApplication1\\WebApplication1.csproj": {
+    "C:\\Sudhir\\Code\\graph_sudhir\\WebApplication1\\WebApplication1\\WebApplication1.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\SudhirSharma\\LearningFolder\\.netCore\\swagger\\WebApplication1\\WebApplication1\\WebApplication1.csproj",
+        "projectUniqueName": "C:\\Sudhir\\Code\\graph_sudhir\\WebApplication1\\WebApplication1\\WebApplication1.csproj",
         "projectName": "WebApplication1",
-        "projectPath": "D:\\SudhirSharma\\LearningFolder\\.netCore\\swagger\\WebApplication1\\WebApplication1\\WebApplication1.csproj",
-        "packagesPath": "C:\\Users\\sudhi\\.nuget\\packages\\",
-        "outputPath": "D:\\SudhirSharma\\LearningFolder\\.netCore\\swagger\\WebApplication1\\WebApplication1\\obj\\",
+        "projectPath": "C:\\Sudhir\\Code\\graph_sudhir\\WebApplication1\\WebApplication1\\WebApplication1.csproj",
+        "packagesPath": "C:\\Users\\susharma\\.nuget\\packages\\",
+        "outputPath": "C:\\Sudhir\\Code\\graph_sudhir\\WebApplication1\\WebApplication1\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\sudhi\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\susharma\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -86,7 +87,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.406\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.202\\RuntimeIdentifierGraph.json"
         }
       }
     }

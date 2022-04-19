@@ -9,9 +9,13 @@ namespace WebApplication1.Models
     {
         public string appId { get; set; }
         public string tenantId { get; set; }
-        public string clientSecret { get; set; }
+        public string ClientSecret { get; set; }
 
         public string email { get; set; }
-        
+
+        public string scopes { get; set; }
+
+        public string userId { get; set; }
+
     }
 }

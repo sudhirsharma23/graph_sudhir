@@ -22,13 +22,13 @@ namespace WebApplication1.Models
         {
             this.userSettings = usersettins.Value;
 
-            var scopes = new string[] { "https://graph.microsoft.com/.default" };
+            var scopes = new string[] { this.userSettings.scopes };
 
             // Configure the MSAL client as a confidential client
             var confidentialClient = ConfidentialClientApplicationBuilder
                .Create(this.userSettings.appId)
                  .WithTenantId(this.userSettings.tenantId)
-                 .WithClientSecret(this.userSettings.clientSecret)
+                 .WithClientSecret(this.userSettings.ClientSecret)
                  .Build();
 
             GraphServiceClient graphServiceClient =
@@ -130,7 +130,7 @@ namespace WebApplication1.Models
             // Read user list
             try
             {
-                var mailFolders = await graphClient.Users["ms365sudhir_admin@4xprkm.onmicrosoft.com"].MailFolders.Inbox.Messages
+                var mailFolders = await graphClient.Users[this.userSettings.userId].MailFolders.Inbox.Messages
                     .Request()
                     //.Filter("hasAttachments eq true")
                     .Expand("attachments").GetAsync();
@@ -142,7 +142,7 @@ namespace WebApplication1.Models
 
                     if (message.HasAttachments == true)
                     {
-                        IMessageAttachmentsCollectionPage attachments = await graphClient.Users["ms365sudhir_admin@4xprkm.onmicrosoft.com"].Messages[message.Id].Attachments.Request().GetAsync();
+                        IMessageAttachmentsCollectionPage attachments = await graphClient.Users[this.userSettings.userId].Messages[message.Id].Attachments.Request().GetAsync();
                         foreach (Microsoft.Graph.Attachment attachment in attachments)
                         {
                             if (attachment.ODataType == "#microsoft.graph.fileAttachment")
@@ -150,7 +150,7 @@ namespace WebApplication1.Models
                                 Microsoft.Graph.FileAttachment fileAttachment = attachment as Microsoft.Graph.FileAttachment;
                                 byte[] contentBytes = fileAttachment.ContentBytes;
 
-                                using (FileStream fileStream = new FileStream("d:\\test\\" + fileAttachment.Name, FileMode.Create, FileAccess.Write))
+                                using (FileStream fileStream = new FileStream("c:\\test\\" + fileAttachment.Name, FileMode.Create, FileAccess.Write))
                                 {
                                     fileStream.Write(contentBytes);
                                 }
@@ -180,7 +180,7 @@ namespace WebApplication1.Models
             var confidentialClient = ConfidentialClientApplicationBuilder
                .Create(this.userSettings.appId)
                  .WithTenantId(this.userSettings.tenantId)
-                 .WithClientSecret(this.userSettings.clientSecret)
+                 .WithClientSecret(this.userSettings.ClientSecret)
                  .Build();
 
             var ewsScopes = new string[] { "https://outlook.office365.com/.default" };
@@ -196,10 +196,10 @@ namespace WebApplication1.Models
                 ewsClient.Url = new Uri("https://outlook.office365.com/EWS/Exchange.asmx");
                 ewsClient.Credentials = new OAuthCredentials(authResult.AccessToken);
                 ewsClient.ImpersonatedUserId =
-                    new ImpersonatedUserId(ConnectingIdType.SmtpAddress, "ms365sudhir_admin@4xprkm.onmicrosoft.com");
+                    new ImpersonatedUserId(ConnectingIdType.SmtpAddress, this.userSettings.userId);
 
                 //Include x-anchormailbox header
-                ewsClient.HttpHeaders.Add("X-AnchorMailbox", "ms365sudhir_admin@4xprkm.onmicrosoft.com");
+                ewsClient.HttpHeaders.Add("X-AnchorMailbox", this.userSettings.userId);
 
                 // Make an EWS call to list folders on exhange online
                 var folders = ewsClient.FindFolders(WellKnownFolderName.MsgFolderRoot, new Microsoft.Exchange.WebServices.Data.FolderView(10));
