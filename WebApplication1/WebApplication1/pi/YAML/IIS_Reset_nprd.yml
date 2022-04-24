@@ -1,0 +1,81 @@
+########################################
+# YAML PIPELINE
+#
+# This is the MAIN "entry" file for the pipeline. The stages, jobs, triggers and
+# variables are generally outlined here. However, many additional templates are
+# referenced to keep this file "dry" and to avoid repetition. Generally, this is
+# the only file that should ever be modified, unless specific changes need to be
+# made to particular steps.
+#
+# Templates referenced:
+#   - config_mgmt_jbos.yml
+#     -> (nested) terraform_init_steps.yml
+########################################
+
+parameters:
+- name: operation
+  displayName: Select operation (RESTART/START/STOP)
+  type: string
+  default: RESTART
+  values:
+    - RESTART
+    - START
+    - STOP
+- name: environmentName
+  displayName: Select environment 
+  type: string
+  default: DEV
+  values:
+    - DEV
+    - QA
+    - STAGE
+
+trigger: none
+
+variables:
+  - group: NONPROD-TEN-IAC
+  - name: agent_pool
+    value: FA-ReleasePool-Dev
+  - name: profile
+    value: "assumed"
+  # username to use to log onto target servers (copy scripts)
+  - name: domain_user
+    value: 'corp\NPRD-SA-VTSS-IAC'
+
+stages:
+  ######################################
+  ## iis_reset_prod ##
+  
+  - stage: approval_stage
+    jobs:
+    - deployment: Approval
+      pool:
+        name: $(agent_pool)
+        demands: AWS
+      environment: ApprovalEnv
+      strategy:                  
+        runOnce:
+          deploy:
+            steps:
+            - script: "echo approval is mandatory to run pipeline"
+
+  - stage: iis_reset_nprd
+    dependsOn: 
+      - approval_stage
+    jobs:
+      - job: Build
+        pool:
+          name: $(agent_pool)
+          demands: AWS
+        steps: 
+          - script: "echo ${{ parameters.environmentName }}"
+
+      - job: IIS_RESET
+        #condition: contains(variables['Build.SourceBranch'], 'refs/heads/master')
+        pool:
+          name: $(agent_pool)
+          demands: AWS
+        steps:
+          - script: |
+              powershell.exe ./scripts/iis-management/iis-nprd-ps.ps1 $(domain_user) "'$(AZURE_DEFAULT_PASSWORD)'" ${{ parameters.environmentName }} ${{ parameters.operation }}
+            displayName: IIS Reset Script

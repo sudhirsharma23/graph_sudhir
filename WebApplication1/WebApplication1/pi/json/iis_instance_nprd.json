@@ -1,0 +1,41 @@
+{
+  "environments": [
+    {
+      "name": "DEV",
+      "web_instances": [
+        "AWSVNWEBTENSD01",
+        "AWSVNWEBVTSSD01",
+        "AWSVNWEBVTSSD02"
+      ],
+      "app_instances": [
+        "AWSVNAPPTENSD01"
+      ]
+    },
+    {
+      "name": "QA",
+      "web_instances": [
+        "AWSVNWEBTENSQ01",
+        "AWSVNWEBTENSQ02",
+        "AWSVNWEBVTSSQ01",
+        "AWSVNWEBVTSSQ02"
+      ],
+      "app_instances": [
+        "AWSVNAPPTENSQ01",
+        "AWSVNAPPTENSQ02"
+      ]
+    },
+    {
+      "name": "STAGE",
+      "web_instances": [
+        "AWSVNWEBTENSS01",
+        "AWSVNWEBTENSS02",
+        "AWSVNWEBVTSSS01",
+        "AWSVNWEBVTSSS02"
+      ],
+      "app_instances": [
+        "AWSVNAPPTENSS01",
+        "AWSVNAPPTENSS02"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,94 @@
+trigger: none
+
+resources:
+  repositories:
+  - repository: Pipelines 
+    type: git
+    name: ReleasePlatformAutomation/Pipelines
+    ref: master
+  - repo: self
+stages:
+- stage: Build
+  jobs:  
+  - job: Build
+    timeoutInMinutes: 360
+    displayName: Build
+    pool:
+      name: FA-ContainersPool-Prod
+      demands:
+        - AWS -equals True
+
+    container:
+        image: ssppaps1arpscr1.azurecr.io/wincore19-vs17ent-arps-buildimage1:latest
+        endpoint: DevOps-ACR-PROD
+
+    steps:
+    - task: NuGetCommand@2
+      inputs:
+        command: 'restore'
+        restoreSolution: 'Source/TEN.sln'
+        feedsToUse: 'select'
+
+    - task: VSBuild@1
+      inputs:
+        solution: 'Source/TEN.sln'
+        msbuildArgs: '/p:OutDir=$(Build.ArtifactStagingDirectory)\ /p:DBScriptsSource=$(Build.SourcesDirectory)\DBAutomation\RollScripts\*.*'
+        platform: '$(BuildConfiguration)'
+        configuration: '$(BuildPlatform)'
+
+    - task: NuGetCommand@2
+      inputs:
+        command: 'restore'
+        restoreSolution: 'TenMVC/TenMVC.sln'
+        feedsToUse: 'select'
+
+    - task: VSBuild@1
+      inputs:
+        solution: 'TenMVC/TenMVC.sln'
+        msbuildArgs: '/p:OutDir=$(Build.ArtifactStagingDirectory)'
+        platform: '$(BuildConfiguration)'
+        configuration: '$(BuildPlatform)'
+
+    - task: VSTest@2
+      inputs:
+        testSelector: 'testAssemblies'
+        testAssemblyVer2: '*test*.dll\*test*.appx'''
+        searchFolder: '$(Build.ArtifactStagingDirectory)'
+        codeCoverageEnabled: true
+
+    - task: PublishSymbols@1
+      displayName: 'Publish symbols path: '
+      inputs:
+        SearchPattern: '$(Build.ArtifactStagingDirectory)\*.pdb'
+      continueOnError: true
+
+    - task: PowerShell@2
+      displayName: 'Download PSDeploymentFramework'
+      inputs:
+            targetType: 'inline'
+            script: '
+            Write-Host "Cloning PSDeploymentFramework from ReleasePlatformAutomation..."
+
+            git clone git@ssh.dev.azure.com:v3/FirstAmCorp/ReleasePlatformAutomation/PSDeploymentFramework
+            
+            Remove-Item $(Build.SourcesDirectory)\.git -Recurse -Force -Confirm:$false
+            
+            '
+    - task: CopyFiles@2
+      inputs:
+        SourceFolder: 'EnvironmentInformation'
+        Contents: '**'
+        TargetFolder: '$(build.artifactstagingdirectory)\Deployment\EnvironmentInformation'
+    - task: CopyFiles@2
+      displayName: 'Copy Files to: PowerShell FrameWork'
+      inputs:
+            SourceFolder: '$(Build.SourcesDirectory)\'
+            Contents: |
+              **\PSDeploymentFramework\**
+              !**\$tf\**
+              **\Setup\**
+            TargetFolder: '$(Build.ArtifactStagingDirectory)'
+
+    - task: PowerShell@2
+      inputs:
+        filePath: 'EnvironmentInformation/PostBuildScript_vNext.ps1'
