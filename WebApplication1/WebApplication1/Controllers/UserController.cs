@@ -19,9 +19,7 @@ namespace WebApplication1.Controllers
             this.UserManager = userManager;
         }
 
-
-
-        [HttpGet]
+        [HttpGet("getFullUserList")]
         public async Task<ActionResult> Get()
         {
             try
@@ -62,6 +60,7 @@ namespace WebApplication1.Controllers
                 return this.BadRequest("Could not get the user");
             }
         }
+
         [ActionName("getMailAttachments")]
         [HttpGet("getMailAttachments")]
         public async Task<ActionResult> getMailAttachments()
